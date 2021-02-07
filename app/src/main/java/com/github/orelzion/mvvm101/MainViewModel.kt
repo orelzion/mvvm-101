@@ -1,15 +1,25 @@
 package com.github.orelzion.mvvm101
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import java.util.*
 
-class MainViewModel: ViewModel() {
+class MainViewModel : ViewModel() {
 
-    private var mainViewData = MainViewData("")
-    val mainViewLiveData = MutableLiveData<MainViewData>()
+    private val timer: Timer
+    private var mainViewData = MainViewData("", 0)
+    private val mainViewLiveData = MutableLiveData<MainViewData>()
+    fun bindViewData(): LiveData<MainViewData> = mainViewLiveData
 
-    fun onInputChanged(text: String) {
-        mainViewData = mainViewData.copy(text = text)
-        mainViewLiveData.postValue(mainViewData)
+    init {
+        timer = kotlin.concurrent.timer(period = 1000) {
+            val counter = mainViewData.counter + 1
+            mainViewData = mainViewData.copy(text = counter.toString(), counter = counter)
+            mainViewLiveData.postValue(mainViewData)
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        timer.cancel()
     }
 }

@@ -1,3 +1,3 @@
 package com.github.orelzion.mvvm101
 
-data class MainViewData(val text: String)
+data class MainViewData(val text: String, val counter: Int)

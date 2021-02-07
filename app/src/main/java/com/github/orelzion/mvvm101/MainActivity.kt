@@ -1,11 +1,14 @@
 package com.github.orelzion.mvvm101
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
+import java.util.*
+import java.util.concurrent.atomic.AtomicInteger
+import kotlin.concurrent.timerTask
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,13 +19,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val textView = findViewById<TextView>(R.id.textView)
-        val editText = findViewById<EditText>(R.id.editText)
 
-        editText.doAfterTextChanged { text ->
-            viewModel.onInputChanged(text.toString())
-        }
-
-        viewModel.mainViewLiveData.observe(this, {
+        viewModel.bindViewData().observe(this, {
             textView.text = it.text
         })
     }
