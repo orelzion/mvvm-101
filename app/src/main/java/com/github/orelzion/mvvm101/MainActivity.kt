@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity() {
 
         val textView = findViewById<TextView>(R.id.textView)
 
-        viewModel.bindViewData().observe(this, {
-            textView.text = it.text
-        })
+//        viewModel.bindViewData().observe(this, {
+//            textView.text = it.text
+//        })
     }
 }
