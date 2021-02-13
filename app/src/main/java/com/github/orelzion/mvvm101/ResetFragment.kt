@@ -2,9 +2,9 @@ package com.github.orelzion.mvvm101
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.activityViewModels
 
 
 /**
@@ -14,6 +14,8 @@ import android.view.ViewGroup
  */
 class ResetFragment : Fragment(R.layout.fragment_reset) {
 
+    val viewModel by activityViewModels<MainViewModel>()
+
     companion object {
         @JvmStatic
         fun newInstance() = ResetFragment()
@@ -22,5 +24,9 @@ class ResetFragment : Fragment(R.layout.fragment_reset) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val resetBtn = view.findViewById<Button>(R.id.resetBtnView)
+        resetBtn.setOnClickListener {
+            viewModel.onResetClicked()
+        }
     }
 }

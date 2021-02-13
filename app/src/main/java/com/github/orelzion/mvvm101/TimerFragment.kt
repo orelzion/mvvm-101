@@ -5,13 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 
-/**
- * A simple [Fragment] subclass.
- * Use the [TimerFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class TimerFragment : Fragment(R.layout.fragment_timer) {
+
+    private val viewModel by activityViewModels<MainViewModel>()
 
     companion object {
         @JvmStatic
@@ -21,6 +20,10 @@ class TimerFragment : Fragment(R.layout.fragment_timer) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val textView = view.findViewById<TextView>(R.id.textView)
 
+        viewModel.bindViewData().observe(viewLifecycleOwner, {
+            textView.text = it.text
+        })
     }
 }

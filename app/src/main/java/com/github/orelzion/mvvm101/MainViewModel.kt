@@ -13,8 +13,7 @@ class MainViewModel : ViewModel() {
     init {
         timer = kotlin.concurrent.timer(period = 1000) {
             val counter = mainViewData.counter + 1
-            mainViewData = mainViewData.copy(text = counter.toString(), counter = counter)
-            mainViewLiveData.postValue(mainViewData)
+            updateCounter(counter)
         }
     }
 
@@ -22,4 +21,16 @@ class MainViewModel : ViewModel() {
         super.onCleared()
         timer.cancel()
     }
+
+    fun onResetClicked() {
+        val counter = 0
+        updateCounter(counter)
+    }
+
+    private fun updateCounter(counter: Int) {
+        mainViewData = mainViewData.copy(text = counter.toString(), counter = counter)
+        mainViewLiveData.postValue(mainViewData)
+    }
+
+
 }
